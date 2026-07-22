@@ -143,6 +143,14 @@ async def upload_and_classify(
                         print(f"Error removing case file {filename}: {e}")
         CURRENT_PROJECT_ID = project_id
 
+    # Ensure the project exists in the database to satisfy PostgreSQL foreign key constraint
+    project = db.query(Project).filter(Project.id == project_id).first()
+    if not project:
+        project = Project(id=project_id, category="Supply", status="PENDING")
+        db.add(project)
+        db.commit()
+        db.refresh(project)
+
     file_ext = os.path.splitext(file.filename)[1].lower()
     file_path = os.path.join(UPLOAD_DIR, file.filename)
     
