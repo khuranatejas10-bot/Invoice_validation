@@ -362,7 +362,7 @@ async def run_rules(request: RulesEngineRequest, db: Session = Depends(get_db)):
     """
     Executes validation rules against the structured payload, including Duplicate Detection and Approval Validation.
     """
-    from validators.engine import run_validation_engine_with_meta
+    from services.validation_engine import run_validation_engine_with_meta
     res_meta = run_validation_engine_with_meta(request.extracted_data, db=db, current_project_id=request.project_id)
     
     return {
