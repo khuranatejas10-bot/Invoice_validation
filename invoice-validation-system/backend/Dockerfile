@@ -35,4 +35,4 @@ EXPOSE 8000
 
 # Command to run the application 
 # Note: If your main FastAPI file is named 'app.py' instead of 'main.py', change 'main:app' to 'app:app'
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "python init_db.py && uvicorn main:app --host 0.0.0.0 --port 8000"]
