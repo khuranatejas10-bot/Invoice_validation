@@ -1,0 +1,29 @@
+# Dependency directories
+**/node_modules/
+**/venv/
+**/env/
+.env
+.env.*
+invoice-validation-system/backend/venv/
+
+# Python
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Databases & local stores
+*.sqlite
+invoice-validation-system/backend/invoice_db.sqlite
+invoice-validation-system/backend/data_store/
+invoice-validation-system/backend/uploads/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Build/Dev tools
+**/build/
+**/dist/
+**/.next/
+**/out/
