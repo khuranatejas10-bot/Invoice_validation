@@ -13,3 +13,4 @@ pymupdf==1.27.2.3
 python-docx
 beautifulsoup4
 extract-msg
+psycopg2-binary==2.9.9
