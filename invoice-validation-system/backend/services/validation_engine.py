@@ -101,7 +101,17 @@ def detect_subcategory(extracted_data: Dict[str, Dict[str, Any]]) -> str:
 # --------------------------------------------------------------------------
 
 def load_rules_from_csv(subcategory: str) -> List[Dict[str, str]]:
-    csv_path = "/Users/rabbanitejaskhurana/Desktop/EY/invoice-validation-system/docs/02_Corrected_Validation_Rule_Catalogue.csv"
+    csv_path = os.getenv(
+        "RULE_CATALOGUE_PATH",
+        os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "02_Corrected_Validation_Rule_Catalogue.csv")
+    )
+    if not os.path.exists(csv_path):
+        # Fallback to parent docs directory if running locally in workspace
+        csv_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+            "docs",
+            "02_Corrected_Validation_Rule_Catalogue.csv"
+        )
     if not os.path.exists(csv_path):
         return []
     rules = []

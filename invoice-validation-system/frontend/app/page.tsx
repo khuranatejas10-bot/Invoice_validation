@@ -20,6 +20,8 @@ import {
   Upload
 } from "lucide-react";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
 interface ValidationRule {
   rule: string;
   group: string;
@@ -136,7 +138,7 @@ export default function UploadPortal() {
       
       try {
         setUploadProgress(`Processing file ${i + 1} of ${files.length}...`);
-        const res = await fetch("http://localhost:8000/processing/upload_and_classify", {
+        const res = await fetch(`${API_URL}/processing/upload_and_classify`, {
           method: "POST",
           body: formData,
         });
@@ -145,7 +147,7 @@ export default function UploadPortal() {
         docs.push({
           filename: file.name,
           classification: data.classification,
-          imageUrl: data.image_url ? "http://localhost:8000" + data.image_url : undefined
+          imageUrl: data.image_url ? `${API_URL}${data.image_url}` : undefined
         });
         
         extractedData[data.classification] = data.extracted_fields;
@@ -153,9 +155,9 @@ export default function UploadPortal() {
         texts[data.classification] = data.raw_text || "";
         
         if (data.image_urls && data.image_urls.length > 0) {
-          images[data.classification] = data.image_urls.map((url: string) => "http://localhost:8000" + url);
+          images[data.classification] = data.image_urls.map((url: string) => `${API_URL}${url}`);
         } else if (data.image_url) {
-          images[data.classification] = ["http://localhost:8000" + data.image_url];
+          images[data.classification] = [`${API_URL}${data.image_url}`];
         }
       } catch (err) {
         console.error("Upload failed for", file.name, err);
@@ -168,7 +170,7 @@ export default function UploadPortal() {
     // 2. Completeness Check
     setUploadProgress("Checking Completeness...");
     try {
-      const compRes = await fetch("http://localhost:8000/validation/completeness", {
+      const compRes = await fetch(`${API_URL}/validation/completeness`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ uploaded_doc_types: uploadedTypes })
@@ -182,7 +184,7 @@ export default function UploadPortal() {
     // 3. Rules Engine
     setUploadProgress("Running Unified Rules Engine...");
     try {
-      const ruleRes = await fetch("http://localhost:8000/processing/run_rules", {
+      const ruleRes = await fetch(`${API_URL}/processing/run_rules`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ project_id: projectId, extracted_data: extractedData })

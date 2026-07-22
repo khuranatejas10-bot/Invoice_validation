@@ -3,7 +3,17 @@ import os
 import re
 from typing import List, Dict, Any, Tuple
 
-CSV_PATH = "/Users/rabbanitejaskhurana/Desktop/EY/invoice-validation-system/docs/02_Corrected_Validation_Rule_Catalogue.csv"
+CSV_PATH = os.getenv(
+    "RULE_CATALOGUE_PATH",
+    os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "02_Corrected_Validation_Rule_Catalogue.csv")
+)
+if not os.path.exists(CSV_PATH):
+    # Fallback to parent docs directory if running locally in workspace
+    CSV_PATH = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+        "docs",
+        "02_Corrected_Validation_Rule_Catalogue.csv"
+    )
 
 def get_rule_subcategories() -> List[str]:
     """Helper to extract unique invoice subcategories from CSV."""

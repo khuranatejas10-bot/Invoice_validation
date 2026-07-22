@@ -65,7 +65,7 @@ def _format_extracted_fields(doc_type: str, extracted_fields: Dict[str, Any]) ->
     # Default: return all raw extracted scalar values
     return {k: (v.get("value") if isinstance(v, dict) else v) for k, v in extracted_fields.items()}
 
-DATA_STORE_DIR = "/Users/rabbanitejaskhurana/Desktop/EY/invoice-validation-system/backend/data_store"
+DATA_STORE_DIR = os.getenv("DATA_STORE_DIR", os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data_store"))
 os.makedirs(DATA_STORE_DIR, exist_ok=True)
 
 class DuplicateDocumentError(Exception):

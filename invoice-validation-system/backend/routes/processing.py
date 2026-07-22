@@ -133,7 +133,7 @@ async def upload_and_classify(
     global CURRENT_PROJECT_ID
     if CURRENT_PROJECT_ID is None or CURRENT_PROJECT_ID != project_id:
         print(f"New upload session detected (project_id={project_id}). Clearing old temporary case JSON files...")
-        DATA_STORE_DIR = "/Users/rabbanitejaskhurana/Desktop/EY/invoice-validation-system/backend/data_store"
+        DATA_STORE_DIR = os.getenv("DATA_STORE_DIR", os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data_store"))
         if os.path.exists(DATA_STORE_DIR):
             for filename in os.listdir(DATA_STORE_DIR):
                 if filename.endswith(".json"):
