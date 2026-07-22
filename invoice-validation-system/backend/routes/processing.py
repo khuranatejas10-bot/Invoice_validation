@@ -231,7 +231,12 @@ async def upload_and_classify(
 
     # Fallback to PaddleOCR if not a PDF or if native text was insufficient (scanned)
     if use_ocr:
-        for page_idx, img_path in enumerate(image_paths):
+        pages_to_ocr = list(range(len(image_paths)))
+        if len(image_paths) > 3:
+            pages_to_ocr = [0, 1, len(image_paths) - 1]
+            
+        for page_idx in pages_to_ocr:
+            img_path = image_paths[page_idx]
             processed_path = preprocess_image(img_path)
             blocks = extract_text_from_image(processed_path)
             from PIL import Image
@@ -253,7 +258,12 @@ async def upload_and_classify(
         print(f"Native text classification returned 'Unknown' for {file.filename}. Falling back to OCR...")
         use_ocr = True
         all_blocks = []
-        for page_idx, img_path in enumerate(image_paths):
+        pages_to_ocr = list(range(len(image_paths)))
+        if len(image_paths) > 3:
+            pages_to_ocr = [0, 1, len(image_paths) - 1]
+            
+        for page_idx in pages_to_ocr:
+            img_path = image_paths[page_idx]
             processed_path = preprocess_image(img_path)
             blocks = extract_text_from_image(processed_path)
             from PIL import Image
