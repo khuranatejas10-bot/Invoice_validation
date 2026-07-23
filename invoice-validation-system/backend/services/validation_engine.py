@@ -252,12 +252,8 @@ def run_validation_engine_with_meta(extracted_data: Dict[str, Dict[str, Any]],
             except Exception:
                 req_docs_list = []
             
-            # Map required documents to actual category names
-            required_categories = [map_req_doc(d) for d in req_docs_list if d]
-            
-            if not required_categories:
-                # Fallback to the default 7 mandatory categories if list is empty
-                required_categories = ["Invoice", "Purchase Order", "Bill of Quantity", "Delivery Challan", "DC Summary", "Work Completion", "Approval Email"]
+            # Force the 7 mandatory categories as requested
+            required_categories = ["Invoice", "Purchase Order", "Bill of Quantity", "Delivery Challan", "DC Summary", "Work Completion", "Approval Email"]
             
             missing = [cat for cat in required_categories if cat not in uploaded_types]
             if missing:

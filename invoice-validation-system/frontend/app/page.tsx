@@ -50,17 +50,9 @@ const MANDATORY_CATEGORIES = [
   "Delivery Challan",
   "DC Summary",
   "Work Completion",
-  "Approval Email",
-  "Installation Report",
-  "Material Inspection Report",
-  "Joint Measurement Report",
-  "Abstract Sheet",
-  "Statutory Compliance",
-  "Bank Guarantee",
-  "Proforma Invoice",
-  "SOW Contract",
-  "Approval Document"
+  "Approval Email"
 ];
+
 
 const GROUP_CONFIG: Record<string, { icon: typeof FileCheck; color: string; bgColor: string; borderColor: string }> = {
   "AI Agents & Classification": { icon: Network, color: "text-fuchsia-400", bgColor: "bg-fuchsia-500/10", borderColor: "border-fuchsia-500/20" },
