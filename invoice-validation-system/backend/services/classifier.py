@@ -59,15 +59,15 @@ def classify_document(text: str, filename: str = "") -> str:
     for category in DOCUMENT_KEYWORDS.keys():
         category_slug = category.lower().replace(" ", "_")
         if category_slug in filename_lower or category.lower() in filename_lower:
-            scores[category] += 300
+            scores[category] += 5000
             
     # 2. Filename Abbreviation/Hint Match
     for category, hints in FILENAME_HINTS.items():
         for hint in hints:
             if hint in filename_parts:
-                scores[category] += 200
+                scores[category] += 1000
             elif hint in filename_stem:
-                scores[category] += 100
+                scores[category] += 500
 
     # 3. Header Title Check (First 800 characters)
     header_text = text_normalized[:800]
